@@ -62,7 +62,6 @@ export default function Login({ onLogin }) {
               {busy ? 'Signing in…' : 'Sign in to your dashboard'}
             </button>
           </form>
-          <small className="login-note">For tutors and academy administrators only.</small>
         </div>
       </section>
     </main>

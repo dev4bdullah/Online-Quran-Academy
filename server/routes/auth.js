@@ -8,7 +8,9 @@ const router = Router()
 
 router.post('/login', async (req, res) => {
   const { email = '', password = '' } = req.body ?? {}
-  const user = await User.findOne({ email: email.toLowerCase().trim() })
+  const normalizedEmail = email.trim()
+  const escapedEmail = normalizedEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const user = await User.findOne({ email: { $regex: new RegExp(`^${escapedEmail}$`, 'i') } })
 
   if (!user || !(await bcrypt.compare(password, user.password)) || !['admin', 'teacher'].includes(user.role)) {
     return res.status(401).json({ message: 'Email or password is incorrect.' })

@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { api } from './api.js'
 import PortalLayout from './components/layout/PortalLayout.jsx'
-import Dashboard from './pages/Dashboard.jsx'
 import Login from './pages/Login.jsx'
+import { StudentsPage, ClassesPage, AttendancePage, AssignmentsPage } from './pages/Tables.jsx'
+import { ProgressPage } from './pages/Progress.jsx'
 
 export default function App() {
   const [user, setUser] = useState(() => {
@@ -25,25 +26,28 @@ export default function App() {
     localStorage.setItem('oqa-token', result.token)
     localStorage.setItem('oqa-user', JSON.stringify(result.user))
     setUser(result.user)
-    navigate('/')
+    navigate('/students')
   }
 
   const logout = () => {
     localStorage.removeItem('oqa-token')
     localStorage.removeItem('oqa-user')
     setUser(null)
-    navigate('/')
+    navigate('/login')
   }
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={user
-          ? <PortalLayout user={user} onLogout={logout}><Dashboard user={user} /></PortalLayout>
-          : <Login onLogin={login} />}
-      />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/login" element={user ? <Navigate to="/students" replace /> : <Login onLogin={login} />} />
+      <Route path="/" element={user ? <PortalLayout user={user} onLogout={logout} /> : <Navigate to="/login" replace />}>
+        <Route index element={<Navigate to="/students" replace />} />
+        <Route path="students" element={<StudentsPage />} />
+        <Route path="classes" element={<ClassesPage />} />
+        <Route path="attendance" element={<AttendancePage />} />
+        <Route path="assignments" element={<AssignmentsPage role={user?.role} />} />
+        <Route path="progress" element={<ProgressPage role={user?.role} />} />
+      </Route>
+      <Route path="*" element={<Navigate to={user ? '/students' : '/login'} replace />} />
     </Routes>
   )
 }

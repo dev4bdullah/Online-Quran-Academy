@@ -50,12 +50,12 @@ await Metric.insertMany([
   ['Jun', 84, 38], ['Jul', 87, 44], ['Aug', 85, 49], ['Sep', 90, 55], ['Oct', 93, 62],
 ].map(([month, rate, enrolled], order) => ({ month, rate, enrolled, order })))
 
-const password = await bcrypt.hash('QuranDemo!2026#Safe', 10)
+const password = await bcrypt.hash('tutor123', 10)
 await User.insertMany([
-  { name: 'Academy Owner', email: 'admin@oqa.com', password, role: 'admin' },
+  { name: 'Academy Owner', email: 'Tutor@oqa.com', password, role: 'admin' },
   { name: 'Ustaza Maryam', email: 'teacher@oqa.com', password, role: 'teacher' },
   { name: 'Ayesha Khan', email: 'student@oqa.com', password, role: 'student', studentId: students[0]._id },
 ])
 
-console.log('Seeded. Demo logins (password QuranDemo!2026#Safe): admin@oqa.com, teacher@oqa.com, student@oqa.com')
+console.log('Seeded. Demo logins (password tutor123): Tutor@oqa.com, teacher@oqa.com, student@oqa.com')
 await disconnectDB()

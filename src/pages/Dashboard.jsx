@@ -1,12 +1,9 @@
+import { Link } from 'react-router-dom'
 import {
   Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts'
 import { useApi } from '../api.js'
 import { getPageState } from '../components/ui/LoadingState.jsx'
-import { ProgressPage } from './Progress.jsx'
-import {
-  AssignmentsPage, AttendancePage, ClassesPage, StudentsPage,
-} from './Tables.jsx'
 
 function Overview() {
   const stats = useApi('/stats')
@@ -57,7 +54,7 @@ function Overview() {
         <article className="card overview-card">
           <div className="card-heading">
             <div><span className="eyebrow">ON YOUR SCHEDULE</span><h2>Upcoming classes</h2></div>
-            <a className="text-link" href="#classes">See all</a>
+            <Link className="text-link" to="/classes">See all</Link>
           </div>
           {classes.data.slice(0, 3).map((item) => (
             <div className="row class-row" key={item._id}>
@@ -93,7 +90,7 @@ function Overview() {
         <article className="card overview-card">
           <div className="card-heading">
             <div><span className="eyebrow">COMING UP</span><h2>Assignments</h2></div>
-            <a className="text-link" href="#assignments">See all</a>
+            <Link className="text-link" to="/assignments">See all</Link>
           </div>
           {assignments.data.slice(0, 3).map((item) => (
             <div className="row" key={item._id}>
@@ -113,31 +110,18 @@ export default function Dashboard({ user }) {
     weekday: 'long', month: 'long', day: 'numeric',
   }).format(new Date())
 
-  const sections = [
-    ['overview', 'Overview', <Overview />],
-    ['students', 'My students', <StudentsPage />],
-    ['classes', 'Class schedule', <ClassesPage />],
-    ['attendance', 'Attendance', <AttendancePage />],
-    ['assignments', 'Assignments', <AssignmentsPage role={user.role} />],
-    ['progress', 'Quran progress', <ProgressPage role={user.role} />],
-  ]
-
   return (
     <div className="dashboard-page">
-      <header className="welcome-head" id="overview">
+      <header className="welcome-head">
         <div>
           <span className="eyebrow">{today}</span>
           <h1>Assalamu alaikum, {user.name?.split(' ')[0]}</h1>
           <p>May your teaching bring barakah. Here’s your academy at a glance.</p>
         </div>
-        <a className="btn solid quick-action" href="#attendance"><span aria-hidden="true">✓</span> Take attendance</a>
+        <Link className="btn solid quick-action" to="/attendance"><span aria-hidden="true">✓</span> Take attendance</Link>
       </header>
 
-      {sections.map(([id, , content]) => (
-        <section className="dashboard-section" id={id === 'overview' ? undefined : id} key={id}>
-          {content}
-        </section>
-      ))}
+      <Overview />
       <footer className="dashboard-footer">May Allah bless your efforts in teaching the Quran.</footer>
     </div>
   )

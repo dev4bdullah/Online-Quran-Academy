@@ -1,5 +1,6 @@
+import { NavLink, Link, Outlet } from 'react-router-dom'
+
 const sections = [
-  ['overview', 'Overview', '◈'],
   ['students', 'My students', '♧'],
   ['classes', 'Class schedule', '◷'],
   ['attendance', 'Attendance', '✓'],
@@ -11,18 +12,22 @@ export default function PortalLayout({ user, onLogout, children }) {
   return (
     <div className="shell">
       <aside className="side">
-        <a className="brand" href="#overview">
+        <Link className="brand" to="/students">
           <span className="brand-mark" aria-hidden="true">ق</span>
           <span><strong>Quran</strong><small> Tutor workspace</small></span>
-        </a>
+        </Link>
 
         <div className="nav-caption">YOUR TEACHING</div>
         <nav aria-label="Dashboard sections">
-          {sections.map(([id, label, icon], index) => (
-            <a className={index === 0 ? 'nav-item nav-overview' : 'nav-item'} href={`#${id}`} key={id}>
+          {sections.map(([id, label, icon]) => (
+            <NavLink
+              className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+              to={`/${id}`}
+              key={id}
+            >
               <span className="nav-icon" aria-hidden="true">{icon}</span>
               {label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -36,7 +41,7 @@ export default function PortalLayout({ user, onLogout, children }) {
         </div>
       </aside>
 
-      <main className="main">{children}</main>
+      <main className="main"><Outlet /></main>
     </div>
   )
 }

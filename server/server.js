@@ -16,8 +16,26 @@ import stats from './routes/stats.js'
 validateProductionConfig()
 
 const app = express()
+const isProduction = process.env.NODE_ENV === 'production'
+
 app.use(cors())
 app.use(express.json())
+
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Online Quran Academy API is running.',
+    frontend: 'http://localhost:5173',
+    apiBase: 'http://localhost:5000/api',
+    health: 'http://localhost:5000/api/health',
+  })
+})
+
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'API available.',
+    routes: ['/api/health', '/api/auth/login', '/api/students', '/api/classes', '/api/assignments', '/api/teachers', '/api/progress', '/api/attendance', '/api/stats'],
+  })
+})
 
 app.get('/api/health', (req, res) => res.json({ ok: true }))
 app.use('/api/auth', auth)
@@ -29,18 +47,21 @@ app.use('/api/progress', progress)
 app.use('/api/attendance', attendance)
 app.use('/api/stats', stats)
 
-const frontendDist = fileURLToPath(new URL('../dist/', import.meta.url))
-const frontendIndex = fileURLToPath(new URL('../dist/index.html', import.meta.url))
-app.use(express.static(frontendDist))
-app.use((req, res, next) => {
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ message: 'API route not found.' })
-  }
-  if (req.method !== 'GET') return next()
-  res.sendFile(frontendIndex, (error) => {
-    if (error) next(error)
+if (isProduction) {
+  const frontendDist = fileURLToPath(new URL('../dist/', import.meta.url))
+  const frontendIndex = fileURLToPath(new URL('../dist/index.html', import.meta.url))
+
+  app.use(express.static(frontendDist))
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ message: 'API route not found.' })
+    }
+    if (req.method !== 'GET') return next()
+    res.sendFile(frontendIndex, (error) => {
+      if (error) next(error)
+    })
   })
-})
+}
 
 app.use((err, req, res, next) => {
   console.error(err)
