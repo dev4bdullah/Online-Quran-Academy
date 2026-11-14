@@ -36,7 +36,8 @@ h3 { font-size: 1.35rem; font-weight: 600; margin-bottom: .75rem; }
 .logout-button { border: 0; background: transparent; color: #C6D4CD; font-size: 1.2rem; cursor: pointer; padding: .4rem; }
 .logout-button:hover { color: #F0D793; }
 .link { background: none; border: 0; color: var(--gold); font: inherit; cursor: pointer; padding: 0; margin-top: .4rem; text-decoration: underline; }
-.main { width: 100%; min-width: 0; padding: 2.25rem clamp(1rem, 3vw, 3rem); display: flex; flex-direction: column; max-width: 1500px; }
+.main { width: 100%; min-width: 0; padding: 2rem clamp(.9rem, 2.5vw, 2.25rem); display: flex; flex-direction: column; gap: 1rem; max-width: 1500px; }
+.main > * { min-width: 0; }
 .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; }
 .head p { color: var(--muted); }
 .head > div { min-width: 0; }
@@ -135,19 +136,22 @@ label input, label textarea, label select { padding: .6rem .8rem; border: 1px so
 button:disabled { opacity: .6; cursor: wait; }
 dl { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; margin: .6rem 0; width: 100%; }
 dt { color: var(--muted); font-size: .85rem; }
-dd { font-weight: 500; }
+dd { min-width: 0; font-weight: 500; overflow-wrap: anywhere; }
 .remark { font-size: .9rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: .6rem; width: 100%; }
 
-/* Mobile */
-@media (max-width: 820px) {
+/* Responsive layouts */
+@media (max-width: 960px) {
   .shell { grid-template-columns: 1fr; }
   .side { position: static; height: auto; flex-direction: column; gap: 1rem; padding: 1rem; }
   .side nav { flex-direction: row; flex-wrap: wrap; }
-  .side .nav-item { flex: 1 1 auto; justify-content: center; }
+  .side .nav-item { flex: 1 1 8rem; justify-content: center; }
   .side-foot { display: flex; }
-  .login-page { grid-template-columns: .8fr 1fr; }
-  .login-art { padding: 2rem; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 820px) {
+  .login-page { grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); }
+  .login-art { padding: 2rem; }
 }
 
 @media (max-width: 520px) {
@@ -156,7 +160,7 @@ dd { font-weight: 500; }
   .side { padding: .8rem .65rem; }
   .side nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .side .nav-item { justify-content: flex-start; font-size: .8rem; padding: .6rem .4rem; }
-  .main { padding: 1.25rem .85rem; }
+  .main { padding: 1.1rem .75rem; gap: .8rem; }
   .welcome-head { align-items: flex-start; flex-direction: column; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
   .stat-card { min-height: 130px; padding: .9rem; }
