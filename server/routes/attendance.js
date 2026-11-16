@@ -3,7 +3,7 @@ import { Attendance } from '../models.js'
 import { protect, allow } from '../middleware/auth.js'
 
 const router = Router()
-router.use(protect, allow('admin', 'teacher'))
+router.use(protect, allow('teacher'))
 
 router.get('/', async (req, res) => {
   const { classroom, date } = req.query

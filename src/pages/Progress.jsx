@@ -34,22 +34,20 @@ export function ProgressPage({ role }) {
         </div>
       </header>
 
-      {role !== 'student' && (
-        <div className="card form">
-          <h3>Record today’s lesson</h3>
-          <select className="search" value={current.student._id} onChange={(e) => pick(e.target.value)}>
-            {progress.data.map((p) => <option key={p.student._id} value={p.student._id}>{p.student.name}</option>)}
-          </select>
-          <div className="fields">
-            <label>Sabaq<input value={form.sabaq} onChange={set('sabaq')} /></label>
-            <label>Sabqi<input value={form.sabqi} onChange={set('sabqi')} /></label>
-            <label>Manzil<input value={form.manzil} onChange={set('manzil')} /></label>
-          </div>
-          <label>Teacher remark<textarea rows={2} value={form.remark} onChange={set('remark')} /></label>
-          <button className="btn solid" onClick={save}>Save lesson</button>
-          {msg && <small className={msg.startsWith('Saved for') ? 'success-message' : 'error'}>{msg}</small>}
+      <div className="card form">
+        <h3>Record today’s lesson</h3>
+        <select className="search" value={current.student._id} onChange={(e) => pick(e.target.value)}>
+          {progress.data.map((p) => <option key={p.student._id} value={p.student._id}>{p.student.name}</option>)}
+        </select>
+        <div className="fields">
+          <label>Sabaq<input value={form.sabaq} onChange={set('sabaq')} /></label>
+          <label>Sabqi<input value={form.sabqi} onChange={set('sabqi')} /></label>
+          <label>Manzil<input value={form.manzil} onChange={set('manzil')} /></label>
         </div>
-      )}
+        <label>Teacher remark<textarea rows={2} value={form.remark} onChange={set('remark')} /></label>
+        <button className="btn solid" onClick={save}>Save lesson</button>
+        {msg && <small className={msg.startsWith('Saved for') ? 'success-message' : 'error'}>{msg}</small>}
+      </div>
 
       <div className="cards">
         {progress.data.map((p) => (

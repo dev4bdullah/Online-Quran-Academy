@@ -52,10 +52,8 @@ await Metric.insertMany([
 
 const password = await bcrypt.hash('tutor123', 10)
 await User.insertMany([
-  { name: 'Academy Owner', email: 'Tutor@oqa.com', password, role: 'admin' },
   { name: 'Ustaza Maryam', email: 'teacher@oqa.com', password, role: 'teacher' },
-  { name: 'Ayesha Khan', email: 'student@oqa.com', password, role: 'student', studentId: students[0]._id },
 ])
 
-console.log('Seeded. Demo logins (password tutor123): Tutor@oqa.com, teacher@oqa.com, student@oqa.com')
+console.log('Seeded. Demo login (password tutor123): teacher@oqa.com')
 await disconnectDB()

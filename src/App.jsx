@@ -10,7 +10,7 @@ export default function App() {
   const [user, setUser] = useState(() => {
     try {
       const savedUser = JSON.parse(localStorage.getItem('oqa-user') || 'null')
-      return localStorage.getItem('oqa-token') && ['admin', 'teacher'].includes(savedUser?.role)
+      return localStorage.getItem('oqa-token') && savedUser?.role === 'teacher'
         ? savedUser
         : null
     } catch {

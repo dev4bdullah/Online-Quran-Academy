@@ -272,12 +272,8 @@ export function AssignmentsPage({ role }) {
   const wait = getPageState(assignments, classes)
   if (wait) return wait
 
-  const staff = role !== 'student'
-  const actionLabel = role === 'teacher'
-    ? 'Assign assignment'
-    : role === 'student'
-      ? 'Upload assignment'
-      : 'New assignment'
+  const staff = true
+  const actionLabel = 'Assign assignment'
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value })
   const save = async () => {
     try {
@@ -329,7 +325,7 @@ export function AssignmentsPage({ role }) {
           </div>
           {msg && <small className="error">{msg}</small>}
           <div className="cta">
-            <button className="btn solid" onClick={save}>{role === 'teacher' ? 'Assign assignment' : role === 'student' ? 'Upload assignment' : 'Save assignment'}</button>
+            <button className="btn solid" onClick={save}>Assign assignment</button>
             <button className="btn" onClick={() => setForm(null)}>Cancel</button>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { Student, Classroom, Assignment, Metric } from '../models.js'
 import { protect, allow } from '../middleware/auth.js'
 
 const router = Router()
-router.use(protect, allow('admin', 'teacher'))
+router.use(protect, allow('teacher'))
 
 router.get('/', async (req, res) => {
   const [students, classes, assignments, trend] = await Promise.all([

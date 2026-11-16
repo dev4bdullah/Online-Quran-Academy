@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import { fileURLToPath } from 'node:url'
-import connectDB, { disconnectDB } from './config/db.js'
+import connectDB, { disconnectDB, ensureDefaultTeacher } from './config/db.js'
 import { validateProductionConfig } from './config/runtime.js'
 import auth from './routes/auth.js'
 import students from './routes/students.js'
@@ -70,6 +70,7 @@ app.use((err, req, res, next) => {
 })
 
 await connectDB()
+await ensureDefaultTeacher()
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`API running on http://localhost:${port}`))
 

@@ -14,7 +14,7 @@ export const User = model('User', new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['admin', 'teacher', 'student'], required: true },
+  role: { type: String, enum: ['teacher'], required: true },
   studentId: { type: Schema.Types.ObjectId, ref: 'Student' },
 }, { timestamps: true }))
 

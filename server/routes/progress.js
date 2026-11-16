@@ -6,15 +6,10 @@ const router = Router()
 router.use(protect)
 
 router.get('/', async (req, res) => {
-  let filter = {}
-  if (req.user.role === 'student') {
-    if (!req.user.studentId) return res.json([])
-    filter = { student: req.user.studentId }
-  }
-  res.json(await Progress.find(filter).populate('student', 'name course'))
+  res.json(await Progress.find({}).populate('student', 'name course'))
 })
 
-router.put('/:studentId', allow('admin', 'teacher'), async (req, res) => {
+router.put('/:studentId', allow('teacher'), async (req, res) => {
   const { sabaq, sabqi, manzil, remark } = req.body
   const saved = await Progress.findOneAndUpdate(
     { student: req.params.studentId },

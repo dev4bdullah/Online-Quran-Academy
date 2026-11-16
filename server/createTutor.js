@@ -16,7 +16,7 @@ if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length < 12) 
 
 await connectDB()
 try {
-  if (await User.exists({ role: { $in: ['admin', 'teacher'] } })) {
+  if (await User.exists({ role: 'teacher' })) {
     throw new Error('A tutor account already exists; refusing to create another.')
   }
   if (await User.exists({ email })) {

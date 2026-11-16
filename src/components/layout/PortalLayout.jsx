@@ -1,24 +1,37 @@
 import { NavLink, Link, Outlet } from 'react-router-dom'
 
 const sections = [
-  ['students', 'My students', '♧'],
-  ['classes', 'Class schedule', '◷'],
+  ['students', 'Students', '♧'],
+  ['classes', 'Classes', '◷'],
   ['attendance', 'Attendance', '✓'],
   ['assignments', 'Assignments', '▤'],
   ['progress', 'Quran progress', '۞'],
 ]
 
-export default function PortalLayout({ user, onLogout, children }) {
+export default function PortalLayout({ user, onLogout }) {
   return (
     <div className="shell">
-      <aside className="side">
+      <header className="topbar">
         <Link className="brand" to="/students">
           <span className="brand-mark" aria-hidden="true">ق</span>
-          <span><strong>Quran</strong><small> Tutor workspace</small></span>
+          <span className="brand-copy">
+            <strong>Quran Academy</strong>
+            <small>Teacher workspace</small>
+          </span>
         </Link>
 
-        <div className="nav-caption">YOUR TEACHING</div>
-        <nav aria-label="Dashboard sections">
+        <div className="account">
+          <span className="user-avatar" aria-hidden="true">{user.name?.charAt(0)?.toUpperCase() || 'T'}</span>
+          <span className="account-copy">
+            <strong>{user.name}</strong>
+            <small>Teacher</small>
+          </span>
+          <button className="logout-button" onClick={onLogout}>Sign out</button>
+        </div>
+      </header>
+
+      <div className="site-content">
+        <nav className="main-nav" aria-label="Main navigation">
           {sections.map(([id, label, icon]) => (
             <NavLink
               className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
@@ -31,17 +44,9 @@ export default function PortalLayout({ user, onLogout, children }) {
           ))}
         </nav>
 
-        <div className="side-foot">
-          <div className="user-avatar" aria-hidden="true">{user.name?.charAt(0)?.toUpperCase() || 'T'}</div>
-          <div className="user-details">
-            <strong>{user.name}</strong>
-            <small>Tutor account</small>
-          </div>
-          <button className="logout-button" onClick={onLogout} aria-label="Sign out" title="Sign out">↗</button>
-        </div>
-      </aside>
-
-      <main className="main"><Outlet /></main>
+        <main className="main"><Outlet /></main>
+        <footer className="site-footer">Online Quran Academy <span>·</span> A place to teach and grow</footer>
+      </div>
     </div>
   )
 }
